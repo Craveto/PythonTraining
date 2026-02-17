@@ -60,6 +60,19 @@ def takeInputFromUser():
             quantity = input("Enter quantity: ")
             if (userInuput.isdigit() and quantity.isdigit()) and (int(userInuput) in [1,2,3,4,5,6,7]) : 
               li.append((int(userInuput),int(quantity))) 
+
+            # ---------------------------- 
+              confirmInput = input("confirm/Remove : Y / N : ")
+              confirmInput = confirmInput.capitalize()
+              confirmInput = confirmInput.strip()
+              if confirmInput.isalpha() and not confirmInput.isdigit(): 
+                 if confirmInput == 'Y' : 
+                    print("Add Next item : ")
+                    continue
+                 else : 
+                    li.pop()
+                    print("removed your item successfully")
+                # --------------------------------------------------- 
          else :
             print("input is not in (1,2,3,4,5,6,7)") 
 
@@ -74,7 +87,12 @@ def takeInputFromUser():
 # print(takeInputFromUser())   # output : (id,quantity) [(2, 1), (3, 5)]
 
 # ------------------------------------------------------------------------ 
+  
+   
 
+
+
+# ---------------------------------------------------------------------
 # generating the bill 
 def billPrinting(tuplist):  
     print("{:^50}".format("Snehal's cafe"))
@@ -118,9 +136,10 @@ def finalCall():
 print(finalCall())
 
 
-
 cursor.close()
-conn.close()
+conn.close() 
+
+
 
 
 
