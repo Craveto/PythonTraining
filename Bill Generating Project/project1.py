@@ -52,37 +52,44 @@ def listItmes():
 
 def takeInputFromUser():
     li = []
+    print("--- Item Selection Menu ---")
+    
     while True: 
-      userInuput = input(f"Enter Id (1-7) or 0 to exit: ")
+        try:
+            userInput = input("Enter Id (1-7) or 0 to exit: ").strip()
+            if userInput == '0':
+                break
 
-      if userInuput.isdigit()  and  userInuput != '0':  
-         if int(userInuput) in [1,2,3,4,5,6,7]:
-            quantity = input("Enter quantity: ")
-            if (userInuput.isdigit() and quantity.isdigit()) and (int(userInuput) in [1,2,3,4,5,6,7]) : 
-              li.append((int(userInuput),int(quantity))) 
+            if not userInput.isdigit() or int(userInput) not in range(1, 8):
+                print("Please enter a number in 1-7.")
+                continue
+            quantityInput = input("Enter quantity: ").strip()
+            if not quantityInput.isdigit():
+                print("Invalid quantity: Please enter integer.")
+                continue
+            item_id = int(userInput)
+            qty = int(quantityInput)
+            li.append((item_id, qty))
+            confirmInput = input("Confirm item? (Y/N): ").strip().upper()
+            if confirmInput == 'Y':
+                print("Item added. Add next item or enter 0 to exit.")
+            else:
+                li.pop()
+                print("Item removed successfully.")
 
-            # ---------------------------- 
-              confirmInput = input("confirm/Remove : Y / N : ")
-              confirmInput = confirmInput.capitalize()
-              confirmInput = confirmInput.strip()
-              if confirmInput.isalpha() and not confirmInput.isdigit(): 
-                 if confirmInput == 'Y' : 
-                    print("Add Next item : ")
-                    continue
-                 else : 
-                    li.pop()
-                    print("removed your item successfully")
-                # --------------------------------------------------- 
-         else :
-            print("input is not in (1,2,3,4,5,6,7)") 
+        except EOFError:
+            print("\nInput interrupted. Exiting...")
+            break
+        except KeyboardInterrupt:
+            print("\nOperation cancelled by user.")
+            return []
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            continue
 
-      elif userInuput == '0' :  
-          break 
-      else : 
-          print("Invalid input : enter proper input !!!") 
+    print("\nYour order is being prepared... 🔃")
+    return li
 
-    print("Your item is being ready 🔃")
-    return li  
    
 # print(takeInputFromUser())   # output : (id,quantity) [(2, 1), (3, 5)]
 
